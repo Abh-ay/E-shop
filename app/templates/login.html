@@ -1,0 +1,121 @@
+{% extends 'base.html' %} {% load static %} {% block bodyContent %}
+
+<section id="slider" style="margin-top: 0px; margin-bottom: 0px">
+  <!--slider-->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li
+              data-target="#slider-carousel"
+              data-slide-to="0"
+              class="active"
+            ></li>
+            <li data-target="#slider-carousel" data-slide-to="1"></li>
+          </ol>
+
+          <div class="carousel-inner">
+            <div class="item active">
+              <div class="col-sm-6">
+                <h3 class="companyinfocustom">From our <span style="color:#FE980F;">Trusted place</span> of customers to yours</h1>
+                  <p>
+                    Manufacturer of white and colored khadi 😀.
+                    
+                  </p>
+              </div>
+              <div class="col-sm-6">
+                {% comment %} <img
+                  src="images/home/girl1.jpg"
+                  class="girl img-responsive"
+                  alt=""
+                />
+                <img src="images/home/pricing.png" class="pricing" alt="" /> {% endcomment %}
+              </div>
+            </div>
+            <div class="item">
+              <div class="col-sm-6">
+                <h3 class="companyinfocustom">See the world with 
+                  <span style="color:#FE980F;">Customers</span> choice</h3>
+
+                <p>
+                  wholesale and
+                  retail dealer of Suitings-Shirting fabrics.
+                  </p>
+               
+              </div>
+              <div class="col-sm-6">
+                {% comment %} <img
+                  src="images/home/girl2.jpg"
+                  class="girl img-responsive"
+                  alt=""
+                />
+                <img src="images/home/pricing.png" class="pricing" alt="" /> {% endcomment %}
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="#slider-carousel"
+            class="left control-carousel hidden-xs"
+            data-slide="prev"
+          >
+            <i class="fa fa-angle-left"></i>
+          </a>
+          <a
+            href="#slider-carousel"
+            class="right control-carousel hidden-xs"
+            data-slide="next"
+          >
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/slider-->
+
+<section id="form" style="margin-top: 0px">
+  <!--form-->
+  <div class="container mt-sm-0">
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-1">
+        <div class="login-form">
+          <!--login form-->
+          <h2>Login to your account</h2>
+          <form method="post" action="">
+            {% csrf_token %} {% for fm in form %}
+            <small class="text-warning"> {{fm.label_tag}} </small>
+            {{fm}}
+            <small class="text-warning">{{fm.errors|striptags}}</small>
+            {% endfor %}
+            <button type="submit" class="btn btn-default">Login</button>
+          </form>
+        </div>
+        <!--/login form-->
+      </div>
+      <div class="col-sm-1">
+        <h2 class="or">OR</h2>
+      </div>
+      <div class="col-sm-4">
+        <div class="signup-form">
+          <!--sign up form-->
+          <h2>New User Signup!</h2>
+          <form method="post" action="">
+            {% csrf_token %} {% for fm in signup %}
+            <small class="text-warning"> {{fm.label_tag}} </small>
+            {{fm}}
+            <small class="text-warning">{{fm.errors|striptags}}</small>
+            {% endfor %}
+            <button type="submit" class="btn btn-default">SignUp</button>
+          </form>
+        </div>
+        <!--/sign up form-->
+      </div>
+    </div>
+  </div>
+</section>
+<!--/form-->
+
+{% endblock bodyContent %}

@@ -1,0 +1,328 @@
+{% extends 'base.html' %} {% load static %} {% block alertMessage %} {%comment%}
+{% endcomment %} {%if messages %} {% for message in messages %}
+<p class="alert alert-success">{{message}}</p>
+{% endfor %} {% comment %} {% endcomment %} {% comment %} {% endcomment %}
+{%endif %} {% endblock alertMessage %} {% block bodyContent %}
+<style>
+  .img-thumbnail {
+    height: 350px;
+    object-fit: cover;
+  }
+  .companyinfocustom {
+    color: #B4B1AB;
+    font-family: abel;
+    font-size: 24px;
+  }
+</style>
+
+<section id="slider">
+  <!--slider-->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li
+              data-target="#slider-carousel"
+              data-slide-to="0"
+              class="active"
+            ></li>
+            <li data-target="#slider-carousel" data-slide-to="1"></li>
+          </ol>
+
+          <div class="carousel-inner">
+            <div class="item active">
+              <div class="col-sm-6">
+                {% comment %} <h3 class="companyinfocustom">123456789</h1> {% endcomment %}
+                <h3 class="companyinfocustom">From our <span style="color:#FE980F;">Trusted place</span> of customers to yours</h1>
+                <p>
+                  Manufacturer of white and colored khadi 😀.
+                  
+                </p>
+              </div>
+              <div class="col-sm-6">
+                {% comment %} <img
+                  src="images/home/girl1.jpg"
+                  class="girl img-responsive"
+                  alt=""
+                />
+                <img src="images/home/pricing.png" class="pricing" alt="" /> {% endcomment %}
+              </div>
+            </div>
+            <div class="item">
+              <div class="col-sm-6">
+                <h3 class="companyinfocustom">See the world with 
+                  <span style="color:#FE980F;">Customers</span> choice</h3>
+
+                <p>
+                  wholesale and
+                  retail dealer of Suitings-Shirting fabrics.
+                  </p>
+              </div>
+              <div class="col-sm-6">
+                {% comment %} <img
+                  src="images/home/girl2.jpg"
+                  class="girl img-responsive"
+                  alt=""
+                /> {% endcomment %}
+                {% comment %} <img src="images/home/pricing.png" class="pricing" alt="" /> {% endcomment %}
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="#slider-carousel"
+            class="left control-carousel hidden-xs"
+            data-slide="prev"
+          >
+            <i class="fa fa-angle-left"></i>
+          </a>
+          <a
+            href="#slider-carousel"
+            class="right control-carousel hidden-xs"
+            data-slide="next"
+          >
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/slider-->
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="left-sidebar">
+          <h2>Category</h2>
+          <div class="panel-group category-products" id="accordian">
+            <!--category-productsr-->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a
+                    data-toggle="collapse"
+                    data-parent="#accordian"
+                    href="#suitings"
+                  >
+                    <span class="badge pull-right"
+                      ><i class="fa fa-plus"></i
+                    ></span>
+                    Suitings
+                  </a>
+                </h4>
+              </div>
+              <div id="suitings" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <ul>
+                    <li><a href="{% url 'home' 'metti' %}">Metti </a></li>
+                    <li><a href="{% url 'home' 'lycra' %}">Lycra </a></li>
+                    <li><a href="{% url 'home' 'cotton' %}">Cotton </a></li>
+                    <li><a href="{% url 'home' 'twill' %}">Twill</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a
+                    data-toggle="collapse"
+                    data-parent="#accordian"
+                    href="#shirtings"
+                  >
+                    <span class="badge pull-right"
+                      ><i class="fa fa-plus"></i
+                    ></span>
+                    Shirtings
+                  </a>
+                </h4>
+              </div>
+              <div id="shirtings" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <ul>
+                    <li><a href="{% url 'home' 'plane' %}">Plane </a></li>
+                    <li><a href="{% url 'home' 'checks' %}">Checks </a></li>
+                    <li><a href="{% url 'home' 'print'  %}">Print </a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a
+                    data-toggle="collapse"
+                    data-parent="#accordian"
+                    href="#fabrics"
+                  >
+                    <span class="badge pull-right"
+                      ><i class="fa fa-plus"></i
+                    ></span>
+                    Fabrics
+                  </a>
+                </h4>
+              </div>
+              <div id="fabrics" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <ul>
+                    <li><a href="{% url 'home' 'alpha' %}">Alpha</a></li>
+                    <li><a href="{% url 'home' 'magic' %}">Magic</a></li>
+                    <li><a href="{% url 'home' 'bsy' %}">BSY</a></li>
+                    <li><a href="{% url 'home' 'cotton' %}">Cotton</a></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a
+                    data-toggle="collapse"
+                    data-parent="#accordian"
+                    href="#colorchart"
+                  >
+                    <span class="badge pull-right"
+                      ><i class="fa fa-plus"></i
+                    ></span>
+                    Color Chart
+                  </a>
+                </h4>
+              </div>
+              <div id="colorchart" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <ul>
+                    <li><a href="{% url 'home' 'sober' %}">Sober</a></li>
+                    <li><a href="{% url 'home' 'fancy' %}">Fancy</a></li>
+                    <li><a href="{% url 'home' 'white' %}">White</a></li>
+                    <li><a href="{% url 'home' 'light' %}">Light</a></li>
+                    <li><a href="{% url 'home' 'dark' %}">Dark</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a
+                    data-toggle="collapse"
+                    data-parent="#accordian"
+                    href="#company"
+                  >
+                    <span class="badge pull-right"
+                      ><i class="fa fa-plus"></i
+                    ></span>
+                    Company/Mill
+                  </a>
+                </h4>
+              </div>
+              <div id="company" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <ul>
+                    <li><a href="{% url 'home' 'saras'%}">Saras</a></li>
+                    <li><a href="{% url 'home' 'navkar'%}">Navkar</a></li>
+                    <li><a href="{% url 'home' 'optimum'%}">Optimum</a></li>
+                    <li><a href="{% url 'home' 'zplus'%}">Z-plus</a></li>
+                    <li><a href="{% url 'home' 'raymond'%}">Raymond</a></li>
+                    <li><a href="{% url 'home' 'donear' %}">Donear</a></li>
+                    <li><a href="{% url 'home' 'srikot'%}">Srikot</a></li>
+                    <li><a href="{% url 'home' 'damodar'%}">Damodar</a></li>
+                    <li><a href="{% url 'home' 'divinetouch'%}">Divine-touch</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/category-products-->
+
+          {% comment %} <div class="price-range">
+            <!--price-range-->
+            <h2>Price Range</h2>
+            <div class="well text-center">
+              <input
+                type="text"
+                class="span2"
+                value=""
+                data-slider-min="0"
+                data-slider-max="1000"
+                data-slider-step="5"
+                data-slider-value="[250,450]"
+                id="sl2"
+              /><br />
+              <b class="pull-left">Rs. 0</b> <b class="pull-right">Rs. 1000</b>
+            </div>
+          </div> {% endcomment %}
+          <!--/price-range-->
+          <div class="text text-center">
+
+            {% comment %} <button type="button" class="text-center btn btn-default get">
+              Filter
+            </button> {% endcomment %}
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-sm-9 padding-right">
+        <div class="features_items">
+          <!--features_items-->
+          <h2 class="title text-center">Features Items</h2>
+          {% if product %} {% for p_data in product %}
+          <div class="container-fluid">
+            <div class="row text-center text-lg-left">
+              <div class="col-lg-4">
+                <a href="{% url 'product-detail' p_data.id %}">
+                  <img class="img-fluid img-thumbnail" src="{{p_data.product_image.url}}" alt="" />
+                </a>
+                <h2>{{p_data.price_range}}</h2>
+                <p>{{p_data.company}}</p>
+                
+                <form method="post" action="{% url 'cart' p_data.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-default add-to-cart fa fa-shopping-cart">Add to cart</button>
+                </form>
+              </div>
+          {% endfor %} {% endif %}
+        </div>
+        <!--features_items-->
+
+
+{% if priority %}
+<div class="recommended_items">
+  <!--recommended_items-->
+  <h2 class="title text-center">recommended items</h2>
+  {% for p_data in priority %}
+          <div class="container-fluid mt-5 py-3 py-md-5">
+            <div class="row text-center text-lg-left">
+              <div class="col-lg-4 col-md-2 col-2">
+                <img class="img-fluid img-thumbnail" src="{{p_data.product_image.url}}" alt="" />
+                <h2>{{p_data.price_range}}</h2>
+                <p>{{p_data.company}}</p>
+                <form method='post' action="{% url 'cart' p_data.id %}">
+                  {% csrf_token %}
+                  {% comment %} <input type="hidden" name="prod_id"
+                  value={{p_data.id}} id="prod_id"
+                  > {% endcomment %}
+                  <button type="submit" class="btn btn-default add-to-cart fa fa-shopping-cart">Add to cart</button>
+                  {% comment %} <a href="{% url 'AddToCart' p_data.id %}" class="btn btn-default add-to-cart" 
+                  ><i class="fa fa-shopping-cart"></i>Add to cart</a {% endcomment %}
+                </form>
+              </div>
+          {% endfor %}
+
+
+<!--/recommended_items-->
+</div>
+
+{% endif %}
+        
+    </div>
+  </div>
+</section>
+{% endblock bodyContent %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% block bodyContent %}
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="left-sidebar"></div>
+      </div>
+
+      <div class="col-sm-9 padding-right">
+        <div class="product-details">
+          {% if product %}
+          <!--product-details-->
+          <div class="col-sm-5">
+            <div class="view-product">
+              <img src="{{product.product_image.url}}" alt="" />
+            </div>
+            <div
+              id="similar-product"
+              class="carousel slide"
+              data-ride="carousel"
+            >
+              <a
+                class="left item-control"
+                href="#similar-product"
+                data-slide="prev"
+              >
+                <i class="fa fa-angle-left"></i>
+              </a>
+              <a
+                class="right item-control"
+                href="#similar-product"
+                data-slide="next"
+              >
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="product-information">
+              <!--/product-information-->
+              <img
+                src="{% static 'images/product-
+                details/new.jpg' %}"
+                class="newarrival"
+                alt=""
+              />
+              <h2>{{product.product_name}}</h2>
+              <p>Web ID: {{product.id}}</p>
+
+              <span>
+                <span>Rs. {{product.price_range}}</span>
+                <button type="button" class="btn btn-fefault cart">
+                  <i class="fa fa-shopping-cart"></i>
+                  Add to cart
+                </button>
+              </span>
+              <p>
+                <b>Availability:</b> {% if product.available %} In Stock{%else%}
+                <span class="text-danger">Out of stock</span>
+                {% endif %}
+              </p>
+              <p><b>Brand:</b> {{product.company}}</p>
+              <a href=""
+                ><img
+                  src="{% static 'images/product-details/share.png' %}"
+                  class="share img-responsive"
+                  alt=""
+              /></a>
+            </div>
+            <!--/product-information-->
+          </div>
+        </div>
+        <!--/product-details-->
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock bodyContent %}

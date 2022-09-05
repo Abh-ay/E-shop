@@ -1,1 +1,1 @@
-web: waitress-serve --listen=localhost:$PORT e_shopper.wsgi:application
+web: gunicorn e_shopper.wsgi

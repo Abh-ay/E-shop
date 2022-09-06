@@ -278,8 +278,9 @@
             <div class="row text-center text-lg-left">
               <div class="col-lg-4">
                 <a href="{% url 'product-detail' p_data.id %}">
-                  <img class="img-fluid img-thumbnail" src="{{p_data.product_image.url}}" alt="" />
+                  <img class="img-fluid img-thumbnail" src="{{MEDIA_URL}}{{p_data.product_image.url}}" alt="{{p_data.product_image}}" />
                 </a>
+                {% comment %} <h2>{{MEDIA_URL}}{{p_data.product_image.url}}</h2> {% endcomment %}
                 <h2>{{p_data.price_range}}</h2>
                 <p>{{p_data.company}}</p>
                 

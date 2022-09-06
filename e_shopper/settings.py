@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from ctypes import cast
+from email.policy import default
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
@@ -24,11 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-%-5ru8t!w!f!bu9^&5q9h$vg=j^*m%1dx%svvp)_l0e$m2k*ig'
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', cast=bool, default=True)
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ["j-k-textiles.herokuapp.com"]

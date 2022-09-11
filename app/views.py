@@ -257,7 +257,7 @@ class ProfileView(View):
 
 def send_verify_mail(email, auth_token):
     subject = 'Your E-shopper account need to be verified'
-    message = f'Hi paste the link to verify your accout http://127.0.0.1:8000/verify/{auth_token}'
+    message = f'Hi paste the link to verify your accout https://j-k-textiles.herokuapp.com/verify/{auth_token}'
     email_from = settings.EMAIL_HOST_USER
     receipent_list = [email]
     send_mail(subject, message, email_from, receipent_list)

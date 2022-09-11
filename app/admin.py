@@ -1,11 +1,15 @@
 from itertools import product
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Cart, Product, OrderPlaced, Customer, User
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+# @admin.register(User)
+class UserAdmin(BaseUserAdmin):
     list_display = ['id', 'is_superuser', 'is_verified', 'email']
+
+
+admin.site.register(User, UserAdmin)
 
 
 @admin.register(Product)

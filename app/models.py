@@ -1,7 +1,10 @@
-from itertools import product
 from django.db import models
-from django.contrib.auth.models import User
 
+from django.contrib.auth.models import AbstractUser
+from e_shopper import settings
+from .managers import UserManager
+
+# User = settings.AUTH_USER_MODEL
 PRODUCT_TYPE_CHOICES = (
     ('suitings', 'SUITINGS'),
     ('shirtings', 'SHIRTINGS'),
@@ -47,18 +50,46 @@ COMPANY_CHOICE = {
     ('srikot', 'Srikot'),
     ('damodar', 'Damodar'),
     ('divinetouch', 'Divine-Touch'),
+}
 
-
-
+DISTRICT_CHOICE = {
+    ('rajkot', 'Rajkot'),
+    ('porbandar', 'Porbandar'),
+    ('veraval', 'Veraval'),
+    ('junagadh', 'Junagadh'),
+    ('botad', 'Botad'),
+    ('amreli', 'Amreli'),
+    ('morbi', 'Morbi'),
+    ('una', 'Una'),
 }
 
 
+class User(AbstractUser):
+
+    username = None
+    email = models.EmailField(unique=True)
+    auth_token = models.CharField(max_length=100, null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    objects = UserManager()
+
+    def __str__(self):
+        return str(self.first_name + self.last_name)
+
+    def get_email(self):
+        return self.email
+
+
 class Customer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100)
     locality = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    zipcode = models.IntegerField()
+    district = models.CharField(
+        max_length=15, choices=DISTRICT_CHOICE, default='Rajkot')
+    zipcode = models.PositiveIntegerField()
 
     def __str__(self):
         return str(self.id)

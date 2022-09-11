@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Checkout | E-Shopper</title>
+    <title>E-Shopper</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet" />
@@ -42,6 +42,16 @@
       color: #B4B1AB;
       font-family: abel;
       font-size: 27px;
+    }
+    .errorlist {
+      border: 1px ;
+      background-color: rgba(245, 245, 245, 0);
+      margin: 0 0 0px;
+      padding: 0;
+      border-radius: 10px; 
+      font-family: abel;
+      color: #DC3545;
+      background: bg-light;
     }
   </style>
   <body>
@@ -82,6 +92,10 @@
           </div>
         </div>
       </div>
+      {% if request.user.is_verified is False%}
+      <p  class="alert alert-warning text-center">Your account has not verified yet please check your mail </p>
+      {% endif %}
+      
       <div class="row">
         <div class="col-sm-12">
           {% block alertMessage %}{% endblock alertMessage %}
@@ -137,23 +151,44 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-8">
-              <div class="shop-menu pull-right">
-                <ul class="nav navbar-nav">
-                  {% if request.user.is_authenticated %}
-                  <li>
-                    <a href=""><i class="fa fa-user"></i> Account</a>
-                  </li>
+            {% comment %} <div class="header-bottom">
+              <!--header-bottom-->
+                  <div class="col-sm-12">
+                    <div class="navbar-header">
+                      <button
+                        type="button"
+                        class="navbar-toggle"
+                        data-toggle="collapse"
+                        data-target=".navbar-collapse"
+                      >
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                    </div>
+                    <div class="mainmenu pull-right">
+                      <ul class="nav navbar-nav collapse navbar-collapse">
+                        {% if request.user.is_authenticated %}
+                        <li class="dropdown">
+                          <a href="#">Account<i class="fa fa-angle-down"></i></a>
+                          <ul role="menu" class="sub-menu">
+                            <li><a href="{% url 'home' %}">View Profile</a></li>
+                            <li><a href="{% url 'checkout' %}">Order</a></li>
+                            <li>
+                              {% if request.user.is_authenticated %}
+                              <a href="{% url 'logout' %}" class="active">Logout</a>
+                              {% else %}
+                              <a href="{% url 'login' %}" class="active">Login</a>
+                              {% endif %}
+                            </li>
+                          </ul>
+                        </li>
                   <li>
                     <a href=""><i class="fa fa-star"></i> Wishlist</a>
                   </li>
                   <li>
-                    <a href="{% url 'checkout' %}"
-                      ><i class="fa fa-crosshairs"></i> Checkout</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"
+                    <a href="{% url 'cart' %}"
                       ><i class="fa fa-shopping-cart"></i> Cart</a
                     >
                   </li>
@@ -161,11 +196,41 @@
                     <a href="{% url 'logout' %}" class="active">Logout</a>
                   </li>
                   {% else %}
-                  <div class="companyinfocustom ">
-                    <h2 style="color: #B4B1AB;font-size: 24px;font-family: abel;">See the world with 
-                    <span style="color:#FE980F;">Customers</span> choice</h2>
+                  <li>
+                    <a href="{% url 'login' %}"><i class="fa fa-user"></i> Account</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'login' %}"><i class="fa fa-star"></i> Wishlist</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'login' %}"
+                      ><i class="fa fa-shopping-cart"></i> Cart</a
+                    >
+                  </li>
+                  <li>
+                    <a href="{% url 'login' %}" class="active">Login</a>
+                  </li>
 
+                  {% endif %}
+                      </ul>
+                    </div>
                   </div>
+            </div> {% endcomment %}
+            <div class="col-sm-8 text-center">
+              <div class="shop-menu pull-right">
+                <ul class="nav navbar-nav">
+                  {% if request.user.is_authenticated %}
+                  
+                  <li><a href="{% url 'profile'  %}"><i class="fa fa-user"></i> Account</a></li>
+                  <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                  <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                  <li><a href="{% url 'logout' %}"><i class="fa fa-lock"></i> Logout</a></li>
+                  {% else %}
+                  
+                  <li><a href="{% url 'login' %}"><i class="fa fa-user"></i> Account</a></li>
+                  <li><a href="{% url 'login' %}"><i class="fa fa-star"></i> Wishlist</a></li>
+                  <li><a href="{% url 'login' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                  <li><a href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a></li>
                   {% endif %}
                 </ul>
               </div>
@@ -200,9 +265,8 @@
                   <li class="dropdown">
                     <a href="#">Shop<i class="fa fa-angle-down"></i></a>
                     <ul role="menu" class="sub-menu">
-                      <li><a href="{% url 'shop' %}">Products</a></li>
-                      <li><a href="{% url 'checkout' %}">Checkout</a></li>
-                      <li><a href="#">Cart</a></li>
+                      <li><a href="{% url 'home' %}">Products</a></li>
+                      <li><a href="{% url 'cart' %}">Cart</a></li>
                       <li>
                         {% if request.user.is_authenticated %}
                         <a href="{% url 'logout' %}" class="active">Logout</a>

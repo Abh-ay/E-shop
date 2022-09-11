@@ -1,47 +1,55 @@
-from urllib import request
+from django.db import IntegrityError
+import uuid
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import logout, login, authenticate
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
-from .models import Cart, Product
+from .models import Cart, Product, User
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password
+
 
 from .forms import LoginForm, SignUpForm
 from django.db.models import Q
 
-# def login_view(request):
-#     fm = LoginForm()
-#     sm = SignUpForm()
-#     if not request.user.is_authenticated:
-#         if request.method == 'POST':
-#             fm = LoginForm(request=request, data=request.POST)
-#             sm = SignUpForm(request.POST)
+
+# class LoginView(View):
+#     def get(self, request):
+#         return render(request, 'login.html', {'form': LoginForm(), 'signup': SignUpForm()})
+
+#     def post(self, request):
+#         print("POST REQUEST")
+#         if not request.user.is_authenticated:
+#             fm = LoginForm(request.POST)
+#             print(fm.is_valid())
 #             if fm.is_valid():
-#                 uname = fm.cleaned_data['username']
-#                 password = fm.cleaned_data['password']
-#                 user = authenticate(username=uname, password=password)
-#                 if user is not None:
-#                     login(request, user)
-#                     messages.success(
-#                         request, 'Log in successfully!')
-#                     return HttpResponseRedirect('/app/home/')
-#             if sm.is_valid():
-#                 print("***USER SM****")
-#                 print(sm)
-#                 sm.save()
-#                 uname = sm.cleaned_data['username']
-#                 password = sm.cleaned_data['password2']
-#                 usr = authenticate(username=uname, password=password)
-#                 print(usr)
-#                 print(usr.is_authenticated)
-#                 if usr is not None:
-#                     print("****NOT NONE****")
-#                     messages.success(request, "Account created successfully!")
-#                     login(request, usr)
-#                     return HttpResponseRedirect('/app/home/')
-#         return render(request, 'login.html', {'form': fm, 'signup': sm})
-#     else:
-#         return HttpResponseRedirect('/app/home/', {'form': fm, 'signup': sm})
+#                 username = fm.cleaned_data['email']
+#                 password = fm.cleaned_data.get('password')
+#                 print("CLEANED DATA")
+#                 print(username)
+#                 print(password)
+#             else:
+#                 print(request.POST)
+#                 print(fm.errors)
+#                 print(fm.non_field_errors)
+#                 username = request.POST['username']
+#                 password = request.POST['password']
+#                 print("NO CLEANED DATA")
+#                 print(username)
+#                 print(password)
+#             user = authenticate(email=username, password=password)
+#             print("AUTHRNTICATE****&&")
+#             print(user)
+#             if user is not None:
+#                 login(request, user)
+#                 messages.success(
+#                     request, 'Log in successfully!')
+#                 return HttpResponseRedirect('/')
+#             return render(request, 'login.html', {'form': fm, 'signup': SignUpForm()})
+#         else:
+#             return HttpResponseRedirect('/login/', {'form': LoginForm(), 'signup': SignUpForm()})
 
 
 class LoginView(View):
@@ -49,39 +57,69 @@ class LoginView(View):
         return render(request, 'login.html', {'form': LoginForm(), 'signup': SignUpForm()})
 
     def post(self, request):
-        if not request.user.is_authenticated:
-            fm = LoginForm(request=request, data=request.POST)
-            sm = SignUpForm(request.POST)
-            if fm.is_valid():
-                uname = fm.cleaned_data['username']
-                password = fm.cleaned_data['password']
-                user = authenticate(username=uname, password=password)
-                if user is not None:
-                    login(request, user)
-                    messages.success(
-                        request, 'Log in successfully!')
-                    return HttpResponseRedirect('/app/home/')
-            if sm.is_valid():
-                print("***USER SM****")
-                print(sm)
-                sm.save()
-                uname = sm.cleaned_data['username']
-                password = sm.cleaned_data['password2']
-                usr = authenticate(username=uname, password=password)
-                print(usr)
-                print(usr.is_authenticated)
-                if usr is not None:
-                    print("****NOT NONE****")
-                    messages.success(request, "Account created successfully!")
-                    login(request, usr)
-                    return HttpResponseRedirect('/app/home/')
-            return render(request, 'login.html', {'form': fm, 'signup': sm})
+        print("***BEGIN*****P")
+        print("IF******P")
+        fm = LoginForm(data=request.POST)
+        print("VALUE******P")
+        print(fm.is_valid())
+        print(fm)
+        if fm.is_valid():
+            print("***VALID ***")
+            print(fm.errors)
+            uname = fm.cleaned_data['username']
+            pwd = fm.cleaned_data['password']
+            usr = authenticate(username=uname, password=pwd)
+            if usr is not None:
+                print("***AUTHENTICATE***")
+                login(request, usr)
+                return HttpResponseRedirect('/')
         else:
-            return HttpResponseRedirect('/app/home/', {'form': LoginForm(), 'signup': SignUpForm()})
+            print("****INVALID*****")
+            print(fm.errors)
+            return render(request, 'login.html', {'form': fm, 'signup': SignUpForm()})
 
 
-def checkout_view(request):
-    return render(request, 'checkout.html')
+class RegisterView(View):
+    def get(self, request):
+        return render(request, 'login.html', {'form': LoginForm(), 'signup': SignUpForm()})
+
+    def post(self, request):
+        print("====&&&***===")
+        sm = SignUpForm(request.POST)
+        print(sm)
+        print(sm.is_valid())
+        try:
+            if sm.is_valid():
+                email = sm.cleaned_data['email']
+                password = sm.cleaned_data['password1']
+                pwd = make_password(password)
+                auth_token = str(uuid.uuid4())
+                usr = User(
+                    email=email, password=pwd, auth_token=auth_token)
+                if not usr is None:
+                    usr.save()
+                    userrr = authenticate(email=email, password=password)
+                    login(request, userrr)
+                    send_verify_mail(email, auth_token)
+                    messages.success(
+                        request, 'Account created successfully!!!')
+                    return redirect('/')
+            else:
+                return render(request, 'login.html', {'form': LoginForm(), 'signup': sm})
+
+        except IntegrityError as e:
+            # if 'unique constraint' in e.message:
+            messages.warning(request, 'Email is already taken',
+                             extra_tags='signup_tags')
+            return HttpResponseRedirect('/login/')
+
+
+class CheckoutView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, 'checkout.html')
+        else:
+            redirect('/login/')
 
 
 class ContactView(View):
@@ -89,30 +127,15 @@ class ContactView(View):
         return render(request, 'contact-us.html')
 
 
-# def home_view(request, data=None):
-    # if request.user.is_authenticated:
-    #     if data == None:
-    #         product = Product.objects.all()
-    #     else:
-    #         product = Product.objects.filter(fabric_type=data) | Product.objects.filter(
-    #             product_type=data) | Product.objects.filter(color_chart=data) | Product.objects.filter(design=data)
-    #     priority = product.filter(priority=True)
-    #     return render(request, 'index.html', {'product': product, 'priority': priority})
-    # else:
-    #     return HttpResponseRedirect('/app/login/')
-
 class HomeView(View):
     def get(self, request, data=None):
-        if request.user.is_authenticated:
-            if data == None:
-                product = Product.objects.all()
-            else:
-                product = Product.objects.filter(fabric_type=data) | Product.objects.filter(
-                    product_type=data) | Product.objects.filter(color_chart=data) | Product.objects.filter(design=data) | Product.objects.filter(company=data)
-            priority = product.filter(priority=True)
-            return render(request, 'index.html', {'product': product, 'priority': priority})
+        if data == None:
+            product = Product.objects.all()
         else:
-            return HttpResponseRedirect('/app/login/')
+            product = Product.objects.filter(fabric_type=data) | Product.objects.filter(
+                product_type=data) | Product.objects.filter(color_chart=data) | Product.objects.filter(design=data) | Product.objects.filter(company=data)
+        priority = product.filter(priority=True)
+        return render(request, 'index.html', {'product': product, 'priority': priority})
 
 
 class NoFoundView(View):
@@ -134,26 +157,12 @@ def shop_view(request):
     return render(request, 'shop.html')
 
 
-# def logout_view(request):
-    # if request.user.is_authenticated:
-    #     logout(request)
-    #     return HttpResponseRedirect('/app/login/')
-
-
 class LogoutView(View):
     def get(self, request):
         if request.user.is_authenticated:
             logout(request)
-            return HttpResponseRedirect('/app/login/')
+            return redirect('/')
 
-
-# def add_to_cart(request):
-#     user = request.user
-#     prod_id = request.GET.get('prod_id')
-#     product = Product.objects.get(pk=prod_id)
-#     cart = Cart(username=user, prod_id=product)
-#     cart.save()
-#     return HttpResponseRedirect('/app/cart/')
 
 class AddToCart(View):
     def get(self, request):
@@ -172,16 +181,18 @@ class AddToCart(View):
             return render(request, 'empty-cart.html')
 
     def post(self, request, id):
-        print(request.method)
-        product = Product.objects.get(pk=id)
-        cart = Cart(
-            quantity=1, user=request.user, product=product)
-        cart.save()
-        if not cart == None:
-            # cartpass = Cart.objects.filter(user=request.user)
-            return HttpResponseRedirect('/app/cart/')
+        if request.user.is_authenticated:
+            product = Product.objects.get(pk=id)
+            cart = Cart(
+                quantity=1, user=request.user, product=product)
+            cart.save()
+            if not cart == None:
+                # cartpass = Cart.objects.filter(user=request.user)
+                return HttpResponseRedirect('/cart/')
+            else:
+                return render(request, 'home.html')
         else:
-            return render(request, 'home.html')
+            return redirect('/login/')
 
 
 class AddCartItemQuantity(View):
@@ -217,14 +228,6 @@ def show_cart(request):
     return render(request, 'cart.html', {'cart_item': cart})
 
 
-# def delete_cart(request, id):
-#     product = Product.objects.get(pk=id)
-#     cart = Cart.objects.get(prod_id=product)
-#     if cart is not None:
-#         cart.delete()
-#         return HttpResponseRedirect('/app/cart/')
-#     return render(request, 'cart.html')
-
 class DeleteCartItem(View):
     def get(self, request, id):
         print("cart.delete====")
@@ -233,11 +236,46 @@ class DeleteCartItem(View):
         if not cart == None:
             print("cart.delete====")
             cart.delete()
-            return HttpResponseRedirect('/app/cart/')
+            return HttpResponseRedirect('/cart/')
 
     def post(self, request, id):
         print("DeleteCartItem@@@")
         cart = Cart.objects.get(pk=id)
         if not cart == None:
             cart.delete()
-            return HttpResponseRedirect('/app/cart/')
+            return HttpResponseRedirect('/cart/')
+
+
+class ProfileView(View):
+    def get(self, request):
+        return render(request, 'profile.html', )
+        # return render(request, 'profile.html', {'fm': CustomerForm(initial={'name': cd.name, 'locality': cd.locality, 'city': cd.city, 'district': cd.district, 'zipcode': cd.zipcode})})
+
+    def post(self, request):
+        return render(request, 'profile.html', )
+
+
+def send_verify_mail(email, auth_token):
+    subject = 'Your E-shopper account need to be verified'
+    message = f'Hi paste the link to verify your accout http://127.0.0.1:8000/verify/{auth_token}'
+    email_from = settings.EMAIL_HOST_USER
+    receipent_list = [email]
+    send_mail(subject, message, email_from, receipent_list)
+
+
+def verify(request, auth_token):
+    try:
+        user_data = User.objects.filter(auth_token=auth_token).first()
+        if user_data:
+            if user_data.is_verified:
+                messages.success(request, 'Your account is already verified')
+                return redirect('/')
+            user_data.is_verified = True
+            user_data.save()
+            messages.success(request, 'Your profile has been verified')
+            return redirect('/')
+        else:
+            return redirect('page-not-found/')
+
+    except Exception as e:
+        print(e)

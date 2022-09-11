@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% load static %} {% block bodyContent %}
+
+<div class="container">
+  <div class="row">
+    <h3>Welcome {{request.user.username}}</h3>
+    <div class="container">
+      <div class="col-sm-8 offset-sm-1">
+        <form action="" method="post">
+          {% csrf_token %} {% for f in fm %}
+          <small class="text-warning"> {{f.label_tag}} </small>
+          {{f}}
+          <small class="text-warning">{{f.errors|striptags}} </small>
+          {% endfor %}
+
+          <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<h2></h2>
+{% endblock bodyContent %}

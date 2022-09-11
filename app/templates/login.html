@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% block bodyContent %}
+{% extends 'base.html' %} {% load static %} 
+
+
+
+
+{% block bodyContent %}
 
 <section id="slider" style="margin-top: 0px; margin-bottom: 0px">
   <!--slider-->
@@ -81,17 +86,22 @@
   <div class="container mt-sm-0">
     <div class="row">
       <div class="col-sm-4 col-sm-offset-1">
+    
+      {%if messages %} {% for message in messages %}
+{% if "login_tags" in message.tags %}
+<p class="alert alert-warning">{{message}}</p>
+{% endif %}
+{% endfor %} 
+{%endif %}
         <div class="login-form">
           <!--login form-->
           <h2>Login to your account</h2>
-          <form method="post" action="">
-            {% csrf_token %} {% for fm in form %}
-            <small class="text-warning"> {{fm.label_tag}} </small>
-            {{fm}}
-            <small class="text-warning">{{fm.errors|striptags}}</small>
-            {% endfor %}
-            <button type="submit" class="btn btn-default">Login</button>
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form }}
+              <button type="submit">Login</button>
           </form>
+          
         </div>
         <!--/login form-->
       </div>
@@ -99,10 +109,18 @@
         <h2 class="or">OR</h2>
       </div>
       <div class="col-sm-4">
+        
+        {%if messages %} {% for message in messages %}
+        {% if "signup_tags" in message.tags%}
+        <p class="alert alert-warning">{{message}}</p>
+
+        {% endif %}
+{% endfor %} 
+{%endif %}
         <div class="signup-form">
           <!--sign up form-->
           <h2>New User Signup!</h2>
-          <form method="post" action="">
+          <form method="post" action="{% url 'register' %}" novalidate>
             {% csrf_token %} {% for fm in signup %}
             <small class="text-warning"> {{fm.label_tag}} </small>
             {{fm}}

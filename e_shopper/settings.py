@@ -33,7 +33,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool, default=True)
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["j-k-textiles.herokuapp.com"]
 # j-k-textiles.herokuapp.com
 
 AUTH_USER_MODEL = 'app.User'

@@ -104,8 +104,8 @@ DATABASES = {
 }
 
 
-db_from_env = e.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# db_from_env = e.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 
 # DATABASES = {
@@ -163,6 +163,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 db_from_env = e.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 MEDIA_URL = '/media/'

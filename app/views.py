@@ -24,7 +24,9 @@ class Index(TemplateView):
         products = Product.objects.order_by("-qty")
         # products=Product.objects.all()
         context["products"] = products
+        print(context)
         return context
+
 
 
 # ----------------- Shop By Brand -----------------
@@ -33,6 +35,7 @@ class BrandCategory(ListView):
 
     def get_context_data(self, *args, **kwargs):
         queryset = kwargs.pop("object_list", None)
+        print(queryset)
         if queryset is None:
             self.object_list = self.get_queryset(*args, **kwargs)
         return super().get_context_data(**kwargs)
@@ -93,6 +96,7 @@ class ItemCategory(ListView):
         qs = qs.order_by("name")
         context = []
         for q in qs:
+            print(q)
             total_category_items = q.product_set.all().count()
             context.append(
                 {
@@ -104,8 +108,8 @@ class ItemCategory(ListView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(*args, **kwargs)
-
         category_id = request.POST.get("category_id")
+        
         if request.POST.get("sort"):
             sort = request.POST.get("sort")
             context["sort"] = sort
@@ -126,7 +130,7 @@ class ItemCategory(ListView):
                     "price"
                 )
         else:
-            products = Product.objects.filter(category_id=category_id)
+            products = Product.objects.filter(category=category_id)
         context["products"] = products
         return self.render_to_response(context)
 
@@ -180,9 +184,11 @@ class ProductView(TemplateView):
         id = kwargs.get("id")
         product = Product.objects.get(id=id)
         similar_products = Product.objects.filter(brand=product.brand)[:4]
-        similar_products2 = Product.objects.filter(
-            category=product.category)[:5]
-        similar_products = similar_products | similar_products2
+        print("+++++++++++++++++++++++++")
+        # similar_products2 = Product.objects.filter(
+        #     category=product.category)[:5]
+        similar_products = similar_products
+        #  | similar_products2
         context["product"] = product
         context["similar_product"] = similar_products
         return self.render_to_response(context)

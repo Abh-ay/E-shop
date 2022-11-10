@@ -43,7 +43,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=51)
     brand = models.ForeignKey(to=Brand, on_delete=models.CASCADE)
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(to=Category)
     qty = models.IntegerField()
     img = models.ImageField(upload_to="products/")
     price = models.FloatField(default=0.0)

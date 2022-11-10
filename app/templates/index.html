@@ -23,13 +23,14 @@ Home
         <!-- single product -->
         <div class="col-lg-3 col-md-6">
           <div class="single-product">
-            <img width="255" height=" 255" src="{{product.img.url}}" alt="">
-            <div class="product-details">
-              <a href="{% url 'product' id=product.id%}" class="product-link">
-                <h6>{{product.name}}</h6>
-              </a>
-              <div class="price">
-                <h6>${{product.price}}</h6>
+            <a  href="{% url 'product' id=product.id%}" class="product-link">
+              <img width="255" height=" 255" src="{{product.img.url}}" alt="">
+            </a>
+            
+            <div class="product-details ">
+                <h6 class="text-color">{{product.name}}</h6>
+              <div>
+                <h6 class="text-color">Rs. {{product.price}}</h6>
               </div>
               {% if product.qty %}
               <div class="prd-bottom">

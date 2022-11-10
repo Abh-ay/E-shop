@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    # "widget_tweaks",
-    # "mathfilters",
+    "widget_tweaks",
+    "mathfilters",
     'app',
 ]
 

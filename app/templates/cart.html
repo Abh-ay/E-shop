@@ -40,7 +40,7 @@ Cart-View
                                 </div>
                             </td>
                             <td>
-                                <h5>${{item.product.price}}</h5>
+                                <h5>Rs. {{item.product.price}}</h5>
                             </td>
                             <td>
                                 <div class="product_count">
@@ -49,7 +49,8 @@ Cart-View
                                 </div>
                             </td>
                             <td>
-                                <h5 id="total_price_{{forloop.counter}}">${{item.product.price|mul:item.qty}}</h5>
+                                {% comment %} <h5>Rs. </h5> {% endcomment %}
+                                <h5 id="total_price_{{forloop.counter}}">{{item.product.price|mul:item.qty}}</h5>
                             </td>
 
                         </tr>
@@ -61,7 +62,7 @@ Cart-View
                                 <h5>Subtotal</h5>
                             </td>
                             <td>
-                                <h5 id="subTotal">$00.00</h5>
+                                <h5 id="subTotal">00.00</h5>
                             </td>
                         </tr>
                         <tr>
@@ -78,10 +79,10 @@ Cart-View
                             <td></td>
                             <td></td>
                             <td>
-                                <h5>Total</h5>
+                                <h5>Total Rs.</h5>
                             </td>
                             <td>
-                                <h5 id="total">$00.00</h5>
+                                <h5 id="total">00.00</h5>
                             </td>
                         </tr>
                         {% if cart_items.0 %}
@@ -112,15 +113,14 @@ Cart-View
         console.log(cart_item_length)
         for (var i = 1; i <= cart_item_length; i++) {
             var price = document.getElementById(`total_price_${i}`).innerText
-            price = parseFloat(price.substring(1))
-            subTotal += price
+            subTotal += parseFloat(price)
             console.log(subTotal)
         }
-        document.getElementById(`subTotal`).innerText = `$${parseFloat(subTotal).toFixed( 2 )}`
+        document.getElementById(`subTotal`).innerText = `${parseFloat(subTotal).toFixed( 2 )}`
         var gst = subTotal * 0.18
-        document.getElementById(`gst`).innerText = `$${parseFloat(gst).toFixed( 2 )}`
-        var total = subTotal + gst
-        document.getElementById(`total`).innerText = `$${parseFloat(total).toFixed( 2 )}`
+        document.getElementById(`gst`).innerText = `${parseFloat(gst).toFixed( 2 )}`
+        var total = parseFloat(subTotal) + parseFloat(gst)
+        document.getElementById(`total`).innerText = `${parseFloat(total).toFixed( 2 )}`
     }
     {% endif %}
 </script>

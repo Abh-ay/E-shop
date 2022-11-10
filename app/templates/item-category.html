@@ -59,7 +59,8 @@ Item-Category
                         <form id="my_form_{{category.category.id}}" method="POST">
                             {% csrf_token %}
                             <input hidden type="text" name="category_id" value="{{category.category.id}}" />
-                            <a href="javascript:{}"
+                            
+                            <a href="javascript:;"
                                 onclick="document.getElementById('my_form_{{category.category.id}}').submit();"><span
                                     class="lnr lnr-arrow-right"></span>{{category.category.name}}({{category.products}})</a>
                         </form>
@@ -86,7 +87,7 @@ Item-Category
                                 </a>
                                 <h6 class="text-secondary">{{product.brand}}</h6>
                                 <div class="price">
-                                    <h6>${{product.price}}</h6>
+                                    <h6>Rs. {{product.price}}</h6>
                                 </div>
                                 <div class="prd-bottom">
                                     <div class="social-info" onclick="addToCart('{{product.id}}')">

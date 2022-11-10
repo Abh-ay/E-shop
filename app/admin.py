@@ -53,7 +53,7 @@ class ProductAdmin(admin.ModelAdmin):
         "id",
         "name",
         "brand",
-        "category",
+        # "category",
         "qty",
         "img",
         "price",

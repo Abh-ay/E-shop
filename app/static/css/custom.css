@@ -113,3 +113,7 @@
 .social-info :hover {
   cursor: pointer;
 }
+
+.text-color {
+  color:#ff6c00 ;
+}

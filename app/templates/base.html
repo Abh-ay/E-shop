@@ -1,469 +1,52 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-  {% load static %}
-  <head>
-    <meta charset="utf-8" />
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>E-Shopper</title>
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/price-range.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}" />
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/linearicons.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/themify-icons.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nice-select.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nouislider.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ion.rangeSlider.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ion.rangeSlider.skinFlat.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    {%block style%} {%endblock%}
+</head>
 
-    <link rel="shortcut icon" href="#" />
-    <link
-      rel="apple-touch-icon-precomposed"
-      sizes="144x144"
-      href="#"
-    />
-    <link
-      rel="apple-touch-icon-precomposed"
-      sizes="114x114"
-      href="#"
-    />
-    <link
-      rel="apple-touch-icon-precomposed"
-      sizes="72x72"
-      href="#"
-    />
-    <link
-      rel="apple-touch-icon-precomposed"
-      href="#"
-    />
-  </head>
-  <style>
-    .companyinfocustom {
-      color: #B4B1AB;
-      font-family: abel;
-      font-size: 27px;
-    }
-    .errorlist {
-      border: 1px ;
-      background-color: rgba(245, 245, 245, 0);
-      margin: 0 0 0px;
-      padding: 0;
-      border-radius: 10px; 
-      font-family: abel;
-      color: #DC3545;
-      background: bg-light;
-    }
-  </style>
-  <body>
-    {% block headerContent %}
+<body>
+    {% include 'nav.html' %}
+    {%block body%}
 
-    <header id="header">
-      <!--header-->
-      <div class="header_top">
-        <!--header_top-->
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="contactinfo">
-                <ul class="nav nav-pills">
-                  <li>
-                    <a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a>
-                  </li>
-                  <li>
-                    <a href=""
-                      ><i class="fa fa-envelope"></i> info@domain.com</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="social-icons pull-right">
-                <ul class="nav navbar-nav">
-                  <li>
-                    <a href=""><i class="fa fa-facebook"></i></a>
-                  </li>
-                  <li>
-                    <a href=""><i class="fa fa-google-plus"></i></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% if request.user.is_verified is False%}
-      <p  class="alert alert-warning text-center">Your account has not verified yet please check your mail </p>
-      {% endif %}
-      
-      <div class="row">
-        <div class="col-sm-12">
-          {% block alertMessage %}{% endblock alertMessage %}
-        </div>
-      </div>
-      <!--/header_top-->
+    {%endblock%}
 
-      <div class="header-middle">
-        <!--header-middle-->
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="logo pull-left">
-                <a href="index.html"
-                  ><img src="{% static 'images/home/logo.png' %}" alt=""
-                /></a>
-              </div>
-              <div class="btn-group pull-right">
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-default dropdown-toggle usa"
-                    data-toggle="dropdown"
-                  >
-                    GONDAL
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="">RAJKOT</a></li>
-                    <li><a href="">JAMNAGAR</a></li>
-                    <li><a href="">PORBANDAR</a></li>
-                    <li><a href="">AMRELI</a></li>
-                    <li><a href="">JUNAGADH</a></li>
-                    <li><a href="">VERAVAL</a></li>
-                    <li><a href="">BOTAD</a></li>
-                    <li><a href="">UNA</a></li>
-                    <li><a href="">MORBI</a></li>
-                  </ul>
-                </div>
+    <script type="text/javascript" src=" {% static 'js/vendor/jquery-2.2.4.min.js' %} "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src=" {% static 'js/vendor/bootstrap.min.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/jquery.ajaxchimp.min.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/jquery.nice-select.min.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/jquery.sticky.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/nouislider.min.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/countdown.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/jquery.magnific-popup.min.js' %} "></script>
+    <script src=" {% static 'js/owl.carousel.min.js' %} "></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script type="text/javascript" src=" {% static 'js/gmaps.min.js' %} "></script>
+    <script type="text/javascript" src=" {% static 'js/main.js' %} "></script>
 
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-default dropdown-toggle usa"
-                    data-toggle="dropdown"
-                  >
-                    INR
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="">INR</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            {% comment %} <div class="header-bottom">
-              <!--header-bottom-->
-                  <div class="col-sm-12">
-                    <div class="navbar-header">
-                      <button
-                        type="button"
-                        class="navbar-toggle"
-                        data-toggle="collapse"
-                        data-target=".navbar-collapse"
-                      >
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
-                    </div>
-                    <div class="mainmenu pull-right">
-                      <ul class="nav navbar-nav collapse navbar-collapse">
-                        {% if request.user.is_authenticated %}
-                        <li class="dropdown">
-                          <a href="#">Account<i class="fa fa-angle-down"></i></a>
-                          <ul role="menu" class="sub-menu">
-                            <li><a href="{% url 'home' %}">View Profile</a></li>
-                            <li><a href="{% url 'checkout' %}">Order</a></li>
-                            <li>
-                              {% if request.user.is_authenticated %}
-                              <a href="{% url 'logout' %}" class="active">Logout</a>
-                              {% else %}
-                              <a href="{% url 'login' %}" class="active">Login</a>
-                              {% endif %}
-                            </li>
-                          </ul>
-                        </li>
-                  <li>
-                    <a href=""><i class="fa fa-star"></i> Wishlist</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'cart' %}"
-                      ><i class="fa fa-shopping-cart"></i> Cart</a
-                    >
-                  </li>
-                  <li>
-                    <a href="{% url 'logout' %}" class="active">Logout</a>
-                  </li>
-                  {% else %}
-                  <li>
-                    <a href="{% url 'login' %}"><i class="fa fa-user"></i> Account</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'login' %}"><i class="fa fa-star"></i> Wishlist</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'login' %}"
-                      ><i class="fa fa-shopping-cart"></i> Cart</a
-                    >
-                  </li>
-                  <li>
-                    <a href="{% url 'login' %}" class="active">Login</a>
-                  </li>
+    {%block script%} {%endblock%}
+</body>
 
-                  {% endif %}
-                      </ul>
-                    </div>
-                  </div>
-            </div> {% endcomment %}
-            <div class="col-sm-8 text-center">
-              <div class="shop-menu pull-right">
-                <ul class="nav navbar-nav">
-                  {% if request.user.is_authenticated %}
-                  
-                  <li><a href="{% url 'profile'  %}"><i class="fa fa-user"></i> Account</a></li>
-                  <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                  <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                  <li><a href="{% url 'logout' %}"><i class="fa fa-lock"></i> Logout</a></li>
-                  {% else %}
-                  
-                  <li><a href="{% url 'login' %}"><i class="fa fa-user"></i> Account</a></li>
-                  <li><a href="{% url 'login' %}"><i class="fa fa-star"></i> Wishlist</a></li>
-                  <li><a href="{% url 'login' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                  <li><a href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a></li>
-                  {% endif %}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--/header-middle-->
-
-      {% if request.user.is_authenticated %}
-      <div class="header-bottom">
-        <!--header-bottom-->
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-9">
-              <div class="navbar-header">
-                <button
-                  type="button"
-                  class="navbar-toggle"
-                  data-toggle="collapse"
-                  data-target=".navbar-collapse"
-                >
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-              </div>
-              <div class="mainmenu pull-left">
-                <ul class="nav navbar-nav collapse navbar-collapse">
-                  <li><a href="{% url 'home' %}">Home</a></li>
-                  <li class="dropdown">
-                    <a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                    <ul role="menu" class="sub-menu">
-                      <li><a href="{% url 'home' %}">Products</a></li>
-                      <li><a href="{% url 'cart' %}">Cart</a></li>
-                      <li>
-                        {% if request.user.is_authenticated %}
-                        <a href="{% url 'logout' %}" class="active">Logout</a>
-                        {% else %}
-                        <a href="{% url 'login' %}" class="active">Login</a>
-                        {% endif %}
-                      </li>
-                    </ul>
-                  </li>
-                  
-                  <li><a href="{% url '404' %}">404</a></li>
-                  <li><a href="{% url 'contact-us' %}">Contact</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="search_box pull-right">
-                <input type="text" placeholder="Search" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-      <!--/header-bottom-->
-    </header>
-    <!--/header-->
-    {%endblock headerContent %} {% block bodyContent %}{% endblock bodyContent%}
-    {% block footerContent %}
-
-    <footer id="footer">
-      <!--Footer-->
-      <div class="footer-top">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-2">
-              <div class="companyinfo">
-                <h2><span>J.K.</span>Textiles</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed
-                  do eiusmod tempor
-                </p>
-              </div>
-            </div>
-            <div class="col-sm-0">
-              <div class="col-sm-1">
-                <div class="video-gallery text-center">
-                  <a href="#">
-                    <div class="rounded mx-auto d-block">
-                      <img
-                        src="{% static 'images/home/iframe16.png' %}"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-sm-1">
-                <div class="video-gallery text-center">
-                  <a href="#">
-                    <div class="rounded mx-auto d-block">
-                      <img
-                        src="{% static 'images/home/iframe15.png' %}"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-sm-1">
-                <div class="video-gallery text-center">
-                  <a href="#">
-                    <div class="rounded mx-auto d-block">
-                      <img
-                        src="{% static 'images/home/iframe12.png' %}"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="col-sm-1">
-                <div class="video-gallery text-center">
-                  <a href="#">
-                    <div class="rounded mx-auto d-block">
-                      <img
-                        src="{% static 'images/home/iframe11.png' %}"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="col-sm-1">
-                <div class="video-gallery text-center">
-                  <a href="#">
-                    <div class="rounded mx-auto d-block">
-                      <img
-                        src="{% static 'images/home/iframe13.png' %}"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              
-            <div class="col-sm-3">
-              <div class="address">
-                <img src="{% static 'images/home/map1.png' %}" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-widget">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-2">
-              <div class="single-widget">
-                <h2>Service</h2>
-                <ul class="nav nav-pills nav-stacked">
-                  <li><a href="">Contact Us</a></li>
-
-                  <li><a href="">Location</a></li>
-                  <li><a href="">FAQ’s</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <div class="single-widget">
-                <h2>Quick Shop</h2>
-                <ul class="nav nav-pills nav-stacked">
-                  <li><a href="">Khadi</a></li>
-                  <li><a href="">Color-Khadi</a></li>
-                  <li><a href="">Suitings</a></li>
-                  <li><a href="">Shirtings</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <div class="single-widget">
-                <h2>Policies</h2>
-                <ul class="nav nav-pills nav-stacked">
-                  <li><a href="">Terms of Use</a></li>
-                  <li><a href="">Privacy Policy</a></li>
-                  <li><a href="">Billing System</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="col-sm-3 col-sm-offset-1">
-              <div class="single-widget">
-                <h2>For Inquiry</h2>
-                <form action="#" class="searchform">
-                  <input type="text" placeholder="Your email address" />
-                  <button type="submit" class="btn btn-default">
-                    <i class="fa fa-arrow-circle-o-right"></i>
-                  </button>
-                  <p>
-                    Get the most recent updates from <br />our site and be
-                    updated your self...
-                  </p>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="container">
-          <div class="row">
-            <p class="pull-left">
-              Copyright © 2015 J.K. textiles. All rights reserved.
-            </p>
-            <p class="pull-right">
-              Designed by
-              <span><a target="_blank" href="">J.K.</a></span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    {% endblock footerContent %}
-    
-    
-  </body>
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/price-range.js' %}"></script>
-    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/cart.js' %}"></script>
 </html>

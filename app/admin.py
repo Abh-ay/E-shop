@@ -1,29 +1,92 @@
-from itertools import product
 from django.contrib import admin
-from .models import Cart, Product, OrderPlaced, Customer, User
+from .models import (
+    Category,
+    Profile,
+    ShippingAdress,
+    Brand,
+    Product,
+    CartItem,
+    Cart,
+    Order,
+    OrderItem,
+)
+
+# Register your models here.
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'is_superuser', 'is_verified', 'email']
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ("id", "user_id", "mobile_no1")
+
+
+@admin.register(ShippingAdress)
+class ShippingAddressAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "address_1",
+        "country",
+        "state",
+        "city",
+        "zipcode",
+    )
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+    )
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+    )
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product_type',
-                    'fabric_type', 'color_chart', 'company', 'available']
+    list_display = (
+        "id",
+        "name",
+        "brand",
+        "category",
+        "qty",
+        "img",
+        "price",
+    )
 
 
-@admin.register(Cart)
-class CartAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product', 'quantity', 'user']
+admin.site.register(Cart)
 
 
-@admin.register(OrderPlaced)
-class OrderPlacedAdmin(admin.ModelAdmin):
-    list_display = ['status', 'customer', 'product', 'ordered_date', 'user']
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "cart_id",
+        "product_id",
+        "qty",
+    )
 
 
-@admin.register(Customer)
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name', 'locality', 'city', 'zipcode']
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user_id",
+        "order_date",
+        "amount",
+    )
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "qty",
+        "amount",
+    )

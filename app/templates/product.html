@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block title%}
+Product
+{%endblock%}
+
+{% block style %}
+
+{% endblock %}
+
+{%block body%}
+
+<!-- Start Single Product Area -->
+<div class="product_image_area">
+    <div class="mt-5"></div>
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <div class="s_Product_carousel">
+                    <div class="single-prd-item">
+                        <img width="540" height="583.78" src="{{product.img.url}}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3>{{product.name}}</h3>
+                    <h2>${{product.price}}</h2>
+                    <ul class="list">
+                        <li><span>Brand : {{product.brand}}</span></li>
+                        <li><span>Category : {{product.category}}</span></li>
+                    </ul>
+                    <p>{{product.description}}</p>
+                    <div class="card_area d-flex align-items-center">
+                        <button class="primary-btn" onclick="addToCart('{{product.id}}')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Single Product Area -->
+
+<!-- Start related-product Area -->
+<section class="related-product-area section_gap_bottom">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h1>Similar Products</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class=" row">
+                {% for product in similar_product %}
+                <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+                    <div class="single-related-product d-flex">
+                        <a href="#"><img width="70" height="70" src="{{product.img.url}}" alt=""></a>
+                        <div class="desc">
+                            <a href="{% url 'product' id=product.id %}" class="title">{{product.name}}</a>
+                            <div class="price">
+                                <h6>${{product.price}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End related-product Area -->
+
+{%endblock%}
+
+{%block script%}
+<script>
+    function addToCart(id) {
+        console.log(id)
+        fetch("{% url 'cart-add' id=1234 %}".replace(/1234/, id.toString()))
+            .then(response => {
+                return response.json();
+            }).then(data => {
+                alert(data.success)
+            })
+    }
+</script>
+{%endblock%}

@@ -1,139 +1,61 @@
-{% extends 'base.html' %} {% load static %} 
+{% extends 'base.html' %}
+{% load static %}
 
+{%block title%}
+Login
+{%endblock%}
 
+{% block style %}
+<style>
+  .text-error {
+    color: red;
+  }
+</style>
+{% endblock %}
 
-
-{% block bodyContent %}
-
-<section id="slider" style="margin-top: 0px; margin-bottom: 0px">
-  <!--slider-->
+{%block body%}
+<!-- Start Login Box Area  -->
+<section class="login_box_area section_gap">
+  <div class="mt-5 pt-5"></div>
   <div class="container">
     <div class="row">
-      <div class="col-sm-12">
-        <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li
-              data-target="#slider-carousel"
-              data-slide-to="0"
-              class="active"
-            ></li>
-            <li data-target="#slider-carousel" data-slide-to="1"></li>
-          </ol>
-
-          <div class="carousel-inner">
-            <div class="item active">
-              <div class="col-sm-6">
-                <h3 class="companyinfocustom">From our <span style="color:#FE980F;">Trusted place</span> of customers to yours</h1>
-                  <p>
-                    Manufacturer of white and colored khadi 😀.
-                    
-                  </p>
-              </div>
-              <div class="col-sm-6">
-                {% comment %} <img
-                  src="images/home/girl1.jpg"
-                  class="girl img-responsive"
-                  alt=""
-                />
-                <img src="images/home/pricing.png" class="pricing" alt="" /> {% endcomment %}
-              </div>
-            </div>
-            <div class="item">
-              <div class="col-sm-6">
-                <h3 class="companyinfocustom">See the world with 
-                  <span style="color:#FE980F;">Customers</span> choice</h3>
-
-                <p>
-                  wholesale and
-                  retail dealer of Suitings-Shirting fabrics.
-                  </p>
-               
-              </div>
-              <div class="col-sm-6">
-                {% comment %} <img
-                  src="images/home/girl2.jpg"
-                  class="girl img-responsive"
-                  alt=""
-                />
-                <img src="images/home/pricing.png" class="pricing" alt="" /> {% endcomment %}
-              </div>
-            </div>
+      <div class="col-lg-6">
+        <div class="login_box_img">
+          <img class="img-fluid" src="{% static 'img/login.jpg' %}" alt="" />
+          <div class="hover">
+            <h4>New to our website?</h4>
+            <a class="primary-btn" href="/register/">Create an Account</a>
           </div>
-
-          <a
-            href="#slider-carousel"
-            class="left control-carousel hidden-xs"
-            data-slide="prev"
-          >
-            <i class="fa fa-angle-left"></i>
-          </a>
-          <a
-            href="#slider-carousel"
-            class="right control-carousel hidden-xs"
-            data-slide="next"
-          >
-            <i class="fa fa-angle-right"></i>
-          </a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<!--/slider-->
-
-<section id="form" style="margin-top: 0px">
-  <!--form-->
-  <div class="container mt-sm-0">
-    <div class="row">
-      <div class="col-sm-4 col-sm-offset-1">
-    
-      {%if messages %} {% for message in messages %}
-{% if "login_tags" in message.tags %}
-<p class="alert alert-warning">{{message}}</p>
-{% endif %}
-{% endfor %} 
-{%endif %}
-        <div class="login-form">
-          <!--login form-->
-          <h2>Login to your account</h2>
-          <form method="post" action="{% url 'login' %}">
+      <div class="col-lg-6">
+        <div class="login_form_inner">
+          {% if messages %}
+          {% for message in messages %}
+          <li {% if message.tags %} class="text-{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+          {% endif %}
+          <h3>Log in to enter</h3>
+          <form class="row login_form" method="POST" id="contactForm">
             {% csrf_token %}
-            {{ form }}
-              <button type="submit">Login</button>
-          </form>
-          
-        </div>
-        <!--/login form-->
-      </div>
-      <div class="col-sm-1">
-        <h2 class="or">OR</h2>
-      </div>
-      <div class="col-sm-4">
-        
-        {%if messages %} {% for message in messages %}
-        {% if "signup_tags" in message.tags%}
-        <p class="alert alert-warning">{{message}}</p>
-
-        {% endif %}
-{% endfor %} 
-{%endif %}
-        <div class="signup-form">
-          <!--sign up form-->
-          <h2>New User Signup!</h2>
-          <form method="post" action="{% url 'register' %}" novalidate>
-            {% csrf_token %} {% for fm in signup %}
-            <small class="text-warning"> {{fm.label_tag}} </small>
-            {{fm}}
-            <small class="text-warning">{{fm.errors|striptags}}</small>
-            {% endfor %}
-            <button type="submit" class="btn btn-default">SignUp</button>
+            <div class="col-md-12 form-group">
+              <input type="text" class="form-control" id="name" name="username" placeholder="Username"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" />
+            </div>
+            <div class="col-md-12 form-group">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+            </div>
+            <div class="col-md-12 form-group mt-3">
+              <button type="submit" value="submit" class="primary-btn">
+                Log In
+              </button>
+            </div>
           </form>
         </div>
-        <!--/sign up form-->
       </div>
     </div>
   </div>
 </section>
-<!--/form-->
-
-{% endblock bodyContent %}
+<!-- End Login Box Area  -->
+{%endblock%} {%block script%} {%endblock%}

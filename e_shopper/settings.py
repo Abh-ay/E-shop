@@ -36,7 +36,7 @@ DEBUG = config('DEBUG', cast=bool, default=False)
 ALLOWED_HOSTS = ['*']
 # j-k-textiles.herokuapp.com
 
-AUTH_USER_MODEL = 'app.User'
+# AUTH_USER_MODEL = 'app.User'
 
 # Application definition
 
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    # "widget_tweaks",
+    # "mathfilters",
     'app',
 ]
 
@@ -97,18 +99,18 @@ WSGI_APPLICATION = 'e_shopper.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-      'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('PG_DATABASE'),
-        'USER': config('PG_USER'),
-        'PASSWORD': config('PG_PASSWORD'),
-        'HOST': config('PG_HOST'),
-        'PORT': config('PG_PORT'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    #   'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': config('PG_DATABASE'),
+    #     'USER': config('PG_USER'),
+    #     'PASSWORD': config('PG_PASSWORD'),
+    #     'HOST': config('PG_HOST'),
+    #     'PORT': config('PG_PORT'),
+    # }
 }
 
 
@@ -149,13 +151,15 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
+
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -167,6 +171,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 # STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
@@ -175,7 +181,7 @@ DATABASES['default'].update(db_from_env)
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'productimage')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
@@ -183,3 +189,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'productimage')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS=['https://web-production-b16c.up.railway.app']
+
+LOGIN_URL = '/login/'
+
+
+# CELERY CONF
+# CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'

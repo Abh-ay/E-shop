@@ -1,171 +1,127 @@
-{% extends 'base.html' %} {% load static %} {% block bodyContent %}
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
 
-<section id="cart_items">
-  <div class="container">
-    <div class="breadcrumbs">
-      <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
-        <li class="active">Shopping Cart</li>
-      </ol>
-    </div>
-    <div class="table-responsive cart_info">
-      <table class="table table-condensed">
-        <thead>
-          <tr class="cart_menu">
-            <td style="width: 25%; height: 10%" class="image">Item</td>
-            <td class="description">Description</td>
-            <td class="price">Price</td>
-            <td class="quantity">Quantity</td>
-            <td class="total">Total</td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          {% if cart %} {% for ct in cart %}
-          <tr>
-            <td class="cart_product">
-              <a href=""
-                ><img
-                  style="width: 20%; height: 10%"
-                  class="img-responsive"
-                  src="{{ct.product.product_image.url}}"
-                  alt=""
-              /></a>
-            </td>
-            <td class="cart_description">
-              <h4><a href="">{{ct.product.product_name}}</a></h4>
-              <p>Product ID: {{ct.product.id}}</p>
-            </td>
-            <td class="cart_price">
-              <p>Rs. {{ct.product.price_range}}</p>
-            </td>
-            <td class="cart_quantity">
-              {% comment %}
-              <div class="cart_quantity_button">
-                <a class="cart_quantity_up"> + </a>
-                <span>
-                  <input
-                    id="quantity"
-                    class="cart_quantity_input"
-                    type="text"
-                    name="quantity"
-                    value="{{ct.quantity}}"
-                    autocomplete="off"
-                    size="2"
-                  />
-                </span>
-                <a class="cart_quantity_down" href=""> - </a>
-              </div>
-              {% endcomment %}
-              <label for="quantity">Quantity:</label>
-              <a class="minus-cart btn"
-                ><span class="glyphicon glyphicon-minus"></span
-              ></a>
-              <span id="quantity">{{ct.quantity}}</span>
-              <a class="plus-cart btn" id="{{ct.product.id}}"
-                ><span class="glyphicon glyphicon-plus"></span
-              ></a>
-            </td>
-            <td class="cart_total">
-              <p class="cart_total_price">Rs. {{ct.product.price_range}}</p>
-            </td>
-            <td class="cart_delete">
-              <a
-                method="post"
-                class="cart_quantity_delete"
-                href="{% url 'deleteCart' ct.id %}"
-                ><i class="fa fa-times"></i
-              ></a>
-            </td>
-          </tr>
+{%block title%}
+Cart-View
+{%endblock%}
 
-          {% endfor %} {% endif %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-<!--/#cart_items-->
+{% block style %}
 
-<section id="do_action">
-  <div class="container">
-    <div class="heading">
-      <h3>What would you like to do next?</h3>
-      <p>
-        Choose if you have a discount code or reward points you want to use or
-        would like to estimate your delivery cost.
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="chose_area">
-          <ul class="user_option">
-            <li>
-              <input type="checkbox" />
-              <label>Use Coupon Code</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Use Gift Voucher</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Estimate Shipping & Taxes</label>
-            </li>
-          </ul>
-          <ul class="user_info">
-            <li class="single_field">
-              <label>Country:</label>
-              <select>
-                <option>United States</option>
-                <option>Bangladesh</option>
-                <option>UK</option>
-                <option>India</option>
-                <option>Pakistan</option>
-                <option>Ucrane</option>
-                <option>Canada</option>
-                <option>Dubai</option>
-              </select>
-            </li>
-            <li class="single_field">
-              <label>Region / State:</label>
-              <select>
-                <option>Select</option>
-                <option>Dhaka</option>
-                <option>London</option>
-                <option>Dillih</option>
-                <option>Lahore</option>
-                <option>Alaska</option>
-                <option>Canada</option>
-                <option>Dubai</option>
-              </select>
-            </li>
-            <li class="single_field zip-field">
-              <label>Zip Code:</label>
-              <input type="text" />
-            </li>
-          </ul>
-          <a class="btn btn-default update" href="">Get Quotes</a>
-          <a class="btn btn-default check_out" href="">Continue</a>
+{% endblock %}
+
+{%block body%}
+<!--================ Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="mt-5"></div>
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img width="152" height="152" src="{{item.product.img.url}}" alt="" />
+                                    </div>
+                                    <div class="media-body">
+                                        <a href="{% url 'product' id=item.product.id %}">{{item.product.name}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>${{item.product.price}}</h5>
+                            </td>
+                            <td>
+                                <div class="product_count">
+                                    <input disabled type="text" name="qty" value="{{item.qty}}"
+                                        class="input-text qty" />
+                                </div>
+                            </td>
+                            <td>
+                                <h5 id="total_price_{{forloop.counter}}">${{item.product.price|mul:item.qty}}</h5>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                        <tr class=" bottom_button">
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                                <h5 id="subTotal">$00.00</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>GST (18%)</h5>
+                            </td>
+                            <td>
+                                <h5 id="gst">$00.00</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Total</h5>
+                            </td>
+                            <td>
+                                <h5 id="total">$00.00</h5>
+                            </td>
+                        </tr>
+                        {% if cart_items.0 %}
+                        <tr class="out_button_area text-right">
+                            <td colspan="4" class="checkout-btn">
+                                <div class="checkout_btn_inner">
+                                    <a class="primary-btn" href="{% url 'checkout' %}">Proceed to checkout</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="total_area">
-          <ul>
-            <li>
-              Cart Sub Total <span id="amount"><span>{{amount}}</span></span>
-            </li>
-            <li>Shipping Cost <span>{{shipping_amount}}</span></li>
-            <li>
-              Total <span id="totalamount"><span>{{totalamount}}</span></span>
-            </li>
-          </ul>
-          <a class="btn btn-default update" href="">Update</a>
-          <a class="btn btn-default check_out" href="">Check Out</a>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
-<!--/#do_action-->
-{% endblock bodyContent %}
+<!--================ End Cart Area =================-->
+
+{%endblock%}
+
+{%block script%}
+<script>
+    {% if cart_items.0 %}
+    window.onload = (event) => {
+        cart_item_length = {{ cart_items | length }}
+        var subTotal = 0.0
+        console.log(cart_item_length)
+        for (var i = 1; i <= cart_item_length; i++) {
+            var price = document.getElementById(`total_price_${i}`).innerText
+            price = parseFloat(price.substring(1))
+            subTotal += price
+            console.log(subTotal)
+        }
+        document.getElementById(`subTotal`).innerText = `$${parseFloat(subTotal).toFixed( 2 )}`
+        var gst = subTotal * 0.18
+        document.getElementById(`gst`).innerText = `$${parseFloat(gst).toFixed( 2 )}`
+        var total = subTotal + gst
+        document.getElementById(`total`).innerText = `$${parseFloat(total).toFixed( 2 )}`
+    }
+    {% endif %}
+</script>
+{%endblock%}
